@@ -1,2 +1,11 @@
 <small class='text-muted text-sm'>{{user.username}} {{moment(comment.c_at).format("MMM Do YYYY h:mm:ss a")}}</small>
 <p>{{comment.body}}</p>
+<button
+(click)="likeService.onLike('comment',comment.id)"
+[disabled]="!likeService.canLike('comment',comment.id)"
+class='btn btn-small p-1'>
+  <i
+  *ngIf="likeService.canLike('comment',comment.id)"
+  [ngStyle]="{'color': !likeService.canLike('comment',comment.id) ? 'grey' : 'teal'}"
+  class='far fa-thumbs-up'></i> {{ likeService.getLikesById('comment',comment.id).length }}
+</button>

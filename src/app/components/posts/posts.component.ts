@@ -11,6 +11,11 @@ import * as moment from 'moment';
 })
 export class PostsComponent implements OnInit {
 
+  sorting: any = {
+    'type' : '',
+    'direction' : ''
+  }
+
   moment: any = moment;
 
   constructor(public service: PostService, public userService: UserService, public likeService: LikeService) { }
@@ -22,36 +27,44 @@ export class PostsComponent implements OnInit {
     this.service.showNewPost = true;
   }
 
-  canLikePost(post){
-    let canLike = true;
-    // can't like your own post
-    if (this.userService.user.id == this.userService.getUserById(post.u_id).id) {
-      canLike = false;
+  sortPosts(type){
+    // check if something is being sorted already
+    if (this.sorting.type == type) {
+      // flip it
+      this.sorting.direction = this.sorting.direction == "desc" ? 'asc' : 'desc';
+    } else {
+      this.sorting.type = type;
+      this.sorting.direction = 'desc';
     }
-
-    // can't like a post you've already liked
-    // let postLikes = this.likeService.likes.filter(l => l.type == 'post' && l.t_id == post.id);
-    // if (postLikes && postLikes.length > 0) {
-    //   if (postLikes.find(l => l.u_id == this.userService.user.id)) {
-    //     canLike = false;
-    //   }
-    // }
-    return canLike;
+    let dirVal = this.sorting.direction == 'desc' ? 1 : -1;
+    if (type == 'title') {
+      this.service.posts.sort((a,b) => a.title.toLowerCase() > b.title.toLowerCase() ? dirVal : -dirVal);
+    }
+    if (type == "author") {
+      this.service.posts.sort((a,b) => {
+        return this.userService.getUserById(a.u_id).username.toLowerCase() > this.userService.getUserById(b.u_id).username.toLowerCase() ? dirVal : -dirVal;
+      })
+    }
+    if (type == "created") {
+      this.service.posts.sort((a,b) => {
+        return this.moment(a.c_at) > this.moment(b.c_at) ? dirVal : -dirVal;
+      });
+    }
+    if (type == "points") {
+      this.service.posts.sort((a,b) => {
+        let aLikes = this.likeService.likes.filter(l => l.t_id == a.id);
+        let bLikes = this.likeService.likes.filter(l => l.t_id == b.id);
+        return (aLikes && aLikes.length || 0) > (bLikes && bLikes.length || 0) ? dirVal : -dirVal;
+      });
+    }
   }
 
-  onLike(postId){
-    let liked = false;
-    let postLikes = this.likeService.likes.filter(l => l.type == 'post' && l.t_id == postId);
-    if (postLikes && postLikes.length > 0) {
-      let like = postLikes.find(l => l.u_id == this.userService.user.id);
-      if (like != undefined) {
-        liked = true;
-        this.likeService.deleteLike(like);
-        return;
-      }
+  getSortIcon(type) {
+    return {
+      'fa-sort': this.sorting.type != type || this.sorting.direction == '',
+      'fa-sort-up': this.sorting.type == type && this.sorting.direction == 'asc',
+      'fa-sort-down': this.sorting.type == type && this.sorting.direction == 'desc'
     }
-    this.likeService.createLike('post',postId,this.userService.user.id);
-    this.likeService.getLikes();
   }
 
 }

@@ -17,10 +17,30 @@
   <table class='table' *ngIf="service.posts.length > 0">
     <thead>
       <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Created</th>
-        <th>Points</th>
+        <th style="cursor:pointer" (click)="sortPosts('title')">
+          Title
+          <i
+          [ngClass]="getSortIcon('title')"
+          class='fas'></i>
+        </th>
+        <th style="cursor:pointer" (click)="sortPosts('author')">
+          Author
+          <i
+          [ngClass]="getSortIcon('author')"
+          class='fas fa-sort'></i>
+        </th>
+        <th style="cursor:pointer" (click)="sortPosts('created')">
+          Created
+          <i
+          [ngClass]="getSortIcon('created')"
+          class='fas fa-sort'></i>
+        </th>
+        <th style="cursor:pointer" (click)="sortPosts('points')">
+          Points
+          <i
+          [ngClass]="getSortIcon('points')"
+          class='fas fa-sort'></i>
+        </th>
       </tr>
     </thead>
     <tbody>

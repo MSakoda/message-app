@@ -5,6 +5,15 @@
   </div>
   <div class="card-body">
     <p class='card-text'>{{message.body}}</p>
+    <button
+    (click)="likeService.onLike('message',message.id)"
+    [disabled]="!likeService.canLike('message',message.id)"
+    class='btn btn-small p-1'>
+      <i
+      *ngIf="likeService.canLike('message',message.id)"
+      [ngStyle]="{'color': !likeService.canLike('message',message.id) ? 'grey' : 'teal'}"
+      class='far fa-thumbs-up'></i> {{ likeService.getLikesById('message',message.id).length }}
+    </button>
     <hr *ngIf="comments.length > 0">
     <comment-list *ngIf="comments.length > 0" [comments]="comments"></comment-list>
     <div class="row">

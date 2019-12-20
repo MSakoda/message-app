@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from '../../../services/user.service';
+import { LikeService } from '../../../services/like.service';
 import { Comment } from '../../../models/Comment';
 import { User } from '../../../models/User';
 import * as moment from 'moment';
@@ -14,11 +15,9 @@ export class CommentComponent implements OnInit {
   user: User;
   moment: any = moment;
 
-  constructor(public userService: UserService) { }
+  constructor(public userService: UserService, public likeService: LikeService) { }
 
   ngOnInit() {
-    console.log("comment:",this.comment);
     this.user = this.userService.getUserById(this.comment.u_id);
   }
-
 }

@@ -25,8 +25,9 @@ export class PostService {
     }
 
     this.userService.logoutChange.subscribe((res: any) => {
-      console.log(`logout change`);
+      window.localStorage.selectedPost = '';
       this.post = null;
+      this.showPost = false;
     })
   }
 
@@ -53,6 +54,9 @@ export class PostService {
 
   getPosts(){
     this.posts = JSON.parse(window.localStorage.posts);
+    this.posts.sort((a,b) => {
+      return a.c_at > b.c_at ? -1 : 1;
+    })
   }
 
   getPostById(){
