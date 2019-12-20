@@ -1,0 +1,17 @@
+<div class="container card mx-auto w-50">
+  <form>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+      [ngClass]="errors ? 'border border-danger' : 'border'"
+      type="text"
+      name="username"
+      [(ngModel)]="username"
+      class="form-control">
+      <p *ngIf="errors" class='text-danger'>{{error}}</p>
+    </div>
+    <div class="form-group">
+      <button class='form-control btn btn-primary' (click)="onClick()">Login <i class='fas fa-sign-in-alt'></i></button>
+    </div>
+  </form>
+</div>

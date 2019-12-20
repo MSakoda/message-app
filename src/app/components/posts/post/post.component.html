@@ -1,0 +1,32 @@
+<button class='btn btn-primary btn-sm mb-3' (click)="onClickPosts()"><i class='fas fa-arrow-left'></i> Posts</button>
+
+<div class="card">
+  <div class="card-header">
+    {{service.post.title}}
+    <span class='float-right text-muted'>{{moment(service.post.c_at).format("MMM Do YYYY h:mm:s a")}}</span>
+  </div>
+  <div class="card-body">
+    <p class='card-text'>{{service.post.body}}</p>
+    <button
+    (click)="likeService.onLike('post',service.post.id)"
+    [disabled]="!likeService.canLike('post',service.post.id)"
+    class='btn btn-small p-1'>
+      <i
+      *ngIf="likeService.canLike('post',service.post.id)"
+      [ngStyle]="{'color': !likeService.canLike('post',service.post.id) ? 'grey' : 'teal'}"
+      class='far fa-thumbs-up'></i> {{ likeService.getLikesById('post',service.post.id).length }}
+    </button>
+  </div>
+</div>
+
+<div class="form-group text-right">
+  <button *ngIf="!showAddMessage" class='btn btn-primary my-2 mb-3 btn-sm' (click)="onClickAddMessage()">Add Message</button>
+</div>
+
+<div class="mb-2">
+  <add-message *ngIf="showAddMessage" [postId]="service.post.id"></add-message>
+</div>
+
+<div class="">
+  <message-list *ngIf="postMessages.length > 0" [messages]="postMessages"></message-list>
+</div>

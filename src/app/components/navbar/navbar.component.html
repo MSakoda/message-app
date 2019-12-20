@@ -1,0 +1,11 @@
+<ul class="nav">
+  <li class="nav-item" *ngIf="!userService.user && !userService.showRegister">
+    <a class="nav-link active"><button class="btn btn-primary" (click)="userService.onShowRegister()">Register <i class='fas fa-user-plus'></i></button></a>
+  </li>
+  <li class="nav-item" *ngIf="!userService.user && !userService.showLogin">
+    <a class="nav-link"><button class="btn btn-primary" (click)="userService.onShowLogin()">Login <i class='fas fa-sign-in-alt'></i></button></a>
+  </li>
+  <li class="nav-item" *ngIf="userService.user">
+    <a class="nav-link"><button class="btn btn-primary" (click)="userService.logoutUser()">Logout <i class='fas fa-sign-out-alt'></i></button></a>
+  </li>
+</ul>

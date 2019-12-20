@@ -1,0 +1,23 @@
+<button class='btn btn-sm btn-primary mb-5' (click)="service.showNewPost = false"><i class='fas fa-arrow-left'></i> Posts</button>
+<h5>New Post</h5>
+<div class="form-group">
+  <label for="title">Title</label>
+  <input
+  [ngClass]="error.title ? 'border border-danger' : 'border'"
+  type="text"
+  class='form-control'
+  [(ngModel)]="title">
+  <p class='text-danger' *ngIf="error.title">{{error.title}}</p>
+</div>
+<div class="form-group">
+  <label for="body">Post</label>
+  <textarea
+  [ngClass]="error.body ? 'border border-danger' : 'border'"
+  [(ngModel)]="body"
+  name="body"
+  class="form-control"></textarea>
+  <p class='text-danger' *ngIf="error.body">{{error.body}}</p>
+</div>
+<div class="form-group">
+  <button class='btn btn-primary' (click)="onClick()">Create Post</button>
+</div>

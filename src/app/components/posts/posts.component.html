@@ -1,0 +1,54 @@
+<div class="m-2 row">
+  <div class="col-md-6 font-weight-bold">
+    <span *ngIf="!service.showPost && !service.showNewPost">
+      Welcome {{ userService.user.username }}
+    </span>
+  </div>
+  <div class="text-right col-md-6">
+    <button class='btn btn-secondary' (click)="userService.logoutUser()">Log Out <i class='fas fa-sign-out-alt'></i></button>
+  </div>
+</div>
+<div class="px-2" *ngIf="!service.showNewPost && !service.showPost">
+  <div class="display-3 text-info text-center">
+    POSTS
+  </div>
+  <button class='btn btn-success mb-3' (click)="onClickNewPost()"><i class='fas fa-plus'></i> New Post</button>
+  <p *ngIf="service.posts.length == 0">No posts yet...</p>
+  <table class='table' *ngIf="service.posts.length > 0">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Created</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let post of service.posts">
+        <td class='text-primary pointer'><u (click)="service.viewPost(post.id)">{{post.title}}</u></td>
+        <td>{{userService.getUserById(post.u_id).username}}</td>
+        <td>{{moment(post.c_at).format("MMM Do YYYY h:mm a")}}</td>
+        <td class='text-center'>
+          <button
+          [style.visibility]="likeService.canLike('post',post.id) ? 'visible' : 'hidden'"
+          (click)="likeService.onLike('post',post.id)"
+          [disabled]="!likeService.canLike('post',post.id)"
+          class='btn btn-small p-1'>
+            <i
+            [ngStyle]="{'color': !likeService.canLike('post',post.id) ? 'grey' : 'teal'}"
+            class='far fa-thumbs-up'></i>
+          </button>
+           {{ likeService.getLikesById('post',post.id).length }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container" *ngIf="service.showNewPost">
+  <new-post></new-post>
+</div>
+
+<div class="container" *ngIf="service.showPost">
+  <post></post>
+</div>

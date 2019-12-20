@@ -1,0 +1,19 @@
+<div class="card mt-2">
+  <div class="card-header">
+    Add Message
+  </div>
+  <div class="card-body">
+    <div class="form-group">
+      <textarea
+      name="body"
+      [ngClass]="{'border-danger': error}"
+      [(ngModel)]="service.body"
+      class='form-control'></textarea>
+    </div>
+    <p class="text-danger" *ngIf="errors.length">Message must not be empty.</p>
+    <div class="form-group text-right">
+      <button class='btn btn-sm btn-danger mr-2' (click)="handleCancelClick()">Cancel</button>
+      <button class='btn btn-sm btn-success' (click)="onSubmitClick()">Submit</button>
+    </div>
+  </div>
+</div>

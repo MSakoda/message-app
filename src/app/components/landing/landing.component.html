@@ -1,0 +1,16 @@
+<div class="text-center bg-primary p-5 text-white">
+  <h1 class='display-1 bg-red'>Message App</h1>
+</div>
+<div class="container">
+  <p class='text-center mt-3'>This is a fun experiment to play around with a Post/Message/Comment webapp using only Local Storage as the database.</p>
+</div>
+<div class="text-center">
+  <div class="row">
+    <div class="offset-md-3 col-md-3">
+      <button class='form-control btn-primary btn inline' (click)="userService.onShowRegister()">Register <i class='fas fa-user-plus'></i></button>
+    </div>
+    <div class="col-md-3">
+      <button class='form-control btn-primary btn inline' (click)="userService.onShowLogin()">Login <i class='fas fa-sign-in-alt'></i></button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,4 @@
+<div class="" *ngFor="let comment of comments; let last = last;">
+  <comment [comment]="comment"></comment>
+  <hr *ngIf="!last"/>
+</div>

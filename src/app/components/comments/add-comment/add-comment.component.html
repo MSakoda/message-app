@@ -1,0 +1,14 @@
+<div class="form-group">
+  <textarea
+  [ngClass]="{'border-danger':error}"
+  class='form-control'
+  [(ngModel)]="body"></textarea>
+</div>
+<p *ngIf="errors.length" class='text-danger'>Comment must not be empty.</p>
+<div class="text-right">
+  <button
+  class="btn btn-danger btn-sm mr-2"
+  (click)="handleCancelClick()">Cancel</button>
+  <button
+  class="btn btn-success btn-sm" (click)="onSubmit()">Submit</button>
+</div>

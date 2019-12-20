@@ -1,0 +1,24 @@
+<div class="card" style="margin-bottom:5px;">
+  <div class="card-header">
+    {{author.username}}
+    <span class='float-right text-muted'>{{moment(message.c_at).format("MMM Do YYYY h:mm:ss a")}}</span>
+  </div>
+  <div class="card-body">
+    <p class='card-text'>{{message.body}}</p>
+    <hr *ngIf="comments.length > 0">
+    <comment-list *ngIf="comments.length > 0" [comments]="comments"></comment-list>
+    <div class="row">
+      <div class="col-md-6">
+      </div>
+      <div class="col-md-6 text-right">
+        <button
+        *ngIf="!showAddComment"
+        class='btn btn-primary btn-sm'
+        (click)="showAddComment = true">Add Comment</button>
+
+      </div>
+    </div>
+
+    <add-comment *ngIf="showAddComment" [messageId]="message.id"></add-comment>
+  </div>
+</div>
